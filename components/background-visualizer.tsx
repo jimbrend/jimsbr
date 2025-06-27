@@ -81,7 +81,7 @@ export default function BackgroundVisualizer({ isPlaying, audioData }: Backgroun
 
         // Create gradient for each wave
         const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
-        const alpha = (0.15 - waveIndex * 0.02) * (0.8 + volume * 0.4)
+        const alpha = (0.15 - waveIndex * 0.02) * (0.8 + volume * 0.4) * 1.4
 
         gradient.addColorStop(0, `rgba(255, 184, 0, ${alpha})`)
         gradient.addColorStop(0.3, `rgba(255, 84, 84, ${alpha * 1.2})`)
@@ -100,7 +100,7 @@ export default function BackgroundVisualizer({ isPlaying, audioData }: Backgroun
           const x = Math.random() * canvas.width
           const y = centerY + Math.sin(time * 0.05 + i) * maxAmplitude * volume
           const size = Math.random() * 2 + 1
-          const alpha = Math.random() * 0.3 + 0.1
+          const alpha = (Math.random() * 0.3 + 0.1) * 1.4
 
           ctx.beginPath()
           ctx.arc(x, y, size, 0, Math.PI * 2)
@@ -125,5 +125,5 @@ export default function BackgroundVisualizer({ isPlaying, audioData }: Backgroun
     }
   }, [isPlaying, audioData])
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" style={{ mixBlendMode: "screen" }} />
+  return <canvas ref={canvasRef} className="fixed inset-0 z-30 pointer-events-none" style={{ mixBlendMode: "screen" }} />
 }

@@ -15,6 +15,7 @@ export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [videoAudioActive, setVideoAudioActive] = useState(false)
   const techStackRef = useRef<HTMLDivElement>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -76,17 +77,18 @@ export default function Home() {
 
   const togglePlayPause = () => {
     if (!audioRef.current) return
-
-      if (isPlaying) {
+    if (isPlaying) {
       audioRef.current.pause()
       if (videoRef.current) {
         videoRef.current.pause()
+        videoRef.current.muted = true
       }
       setIsPlaying(false)
-      } else {
+    } else {
       audioRef.current.play()
       if (videoRef.current) {
         videoRef.current.play()
+        videoRef.current.muted = true
       }
       setIsPlaying(true)
     }
@@ -131,8 +133,8 @@ export default function Home() {
   const techStackItems = [
     { label: "Frontend", value: "Next.js 14, React, HTML Living Standard, Tailwind CSS, electron, shadcn/ui", htmlLivingStandardSmaller: true },
     { label: "Backend", value: "PHP, Drupal, SQL, Typescript, Supabase, Clerk, PostgreSQL, AWS Cloud, C++" },
-    { label: "Payments", value: "Lightning Network, Stipe, BTCPayServer" },
-    { label: "AI", value: "OpenAI, Claude, Grok and X's API, Browserbase, E2B, and more" },
+    { label: "Payments", value: "Lightning Network, Stripe, BTCPayServer" },
+    { label: "AI", value: "OpenAI, Claude, Grok and X's API, Browserbase, E2B, tinygrad, and more" },
     { label: "Deployment", value: "Vercel & GitHub, exploring other hosting options" },
     {
       label: "Game Development",
@@ -149,20 +151,21 @@ export default function Home() {
         ref={audioRef}
         src="written-in-memory.mp3"
         loop
+        autoPlay
       />
 
       {/* Parallax Background Image */}
       <div 
-        className={`fixed inset-0 z-0 opacity-50 transition-all duration-1000 ${
-          isPlaying ? 'opacity-0' : 'opacity-50'
+        className={`fixed inset-0 z-0 transition-all duration-1000 ${
+          isPlaying ? 'opacity-30' : 'opacity-50'
         }`}
         style={{
           backgroundImage: 'url(/background-image.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          transform: `translate(${(mousePosition.x - 50) * 0.02}px, ${(mousePosition.y - 50) * 0.02}px)`,
+          transform: `translate(${(mousePosition.x - 50) * 0.104}px, ${(mousePosition.y - 50) * 0.104}px)`,
           transition: 'transform 0.1s ease-out',
-          filter: isPlaying ? 'brightness(1)' : 'brightness(1.2)'
+          filter: isPlaying ? 'brightness(1.1)' : 'brightness(0.7)'
         }}
       />
 
@@ -173,11 +176,18 @@ export default function Home() {
           isPlaying ? 'opacity-35' : 'opacity-0'
         }`}
         style={{
-          transform: `translate(${(mousePosition.x - 50) * 0.02}px, ${(mousePosition.y - 50) * 0.02}px)`,
-          transition: 'transform 0.1s ease-out'
+          left: '50%',
+          top: '50%',
+          width: '118vw',
+          height: '118vh',
+          transform: `translate(-50%, -50%) translate(${(mousePosition.x - 50) * 0.104}px, ${(mousePosition.y - 50) * 0.104}px)`,
+          position: 'fixed',
+          transition: 'transform 0.1s ease-out',
+          objectFit: 'cover',
+          pointerEvents: 'none',
         }}
         loop
-        muted
+        muted={true}
         playsInline
       >
         <source src="/background-video.mp4" type="video/mp4" />
@@ -277,39 +287,75 @@ export default function Home() {
             </h1>
             <p className="text-xl md:text-2xl text-white/80 mb-8 opacity-80">
               Including: AI Browser Operators, Shopping Assistants, Desktop Computers, e-commerce, gaming studio,
-              bitcoin projects, new media, and more. If interested, just reach out on X or e-mail me
+              bitcoin projects, <span
+                className="cursor-pointer text-yellow-200 hover:text-yellow-400 active:text-yellow-500 transition-colors"
+                onMouseEnter={() => {
+                  // Do nothing on hover, only unmute on click
+                }}
+                onClick={() => {
+                  if (videoRef.current) {
+                    setVideoAudioActive(true);
+                    videoRef.current.muted = false;
+                    videoRef.current.currentTime = 0;
+                    videoRef.current.loop = false;
+                    videoRef.current.play();
+                    // Pause after playing once
+                    videoRef.current.onended = () => {
+                      if (videoRef.current) {
+                        videoRef.current.muted = true;
+                        videoRef.current.loop = true;
+                      }
+                      setVideoAudioActive(false);
+                    };
+                  }
+                }}
+              >new media</span>, and more. If interested, just reach out on X or e-mail me
             </p>
 
             {/* Audio Controls - Always show, with loading state */}
             <div className="flex flex-col items-center gap-3 mb-8">
-              {/* Progress Bar */}
-              {duration > 0 && (
-                <div className="w-full max-w-md mx-auto mb-3">
-                  <div className="flex items-center gap-2 text-white text-xs mb-1">
-                    <span>{formatTime(currentTime)}</span>
-                    <span className="flex-1"></span>
-                    <span>{formatTime(duration)}</span>
-                  </div>
-                  <div
-                    className="w-full h-2 bg-white/20 rounded-full cursor-pointer backdrop-blur-xl border border-white/10"
-                    onClick={handleProgressClick}
-                  >
-                    <div
-                      className="h-full bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full transition-all duration-100"
-                      style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
-                    />
-                  </div>
+              {/* Progress Bar - classic look restored and fixed fill */}
+              <div className="w-full max-w-md mx-auto mb-3 px-2">
+                <div className="flex items-center justify-between text-white text-xs mb-1">
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{formatTime(duration)}</span>
                 </div>
-              )}
+                <div
+                  className="w-full h-3 bg-white/30 rounded-full cursor-pointer backdrop-blur-xl border border-white/20 shadow-md relative"
+                  onClick={handleProgressClick}
+                  style={{ minWidth: 120 }}
+                >
+                  <div
+                    className="h-full bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full transition-all duration-100 shadow absolute top-0 left-0"
+                    style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
+                  />
+                </div>
+                {/* Volume Bar */}
+                <div className="flex items-center gap-2 mt-2">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={audioRef.current?.volume ?? 1}
+                    onChange={e => {
+                      if (audioRef.current) audioRef.current.volume = parseFloat(e.target.value);
+                    }}
+                    className="slider w-32 h-1 bg-white/30 rounded-full appearance-none focus:outline-none"
+                  />
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M19 12c0-3.866-3.134-7-7-7m7 7c0 3.866-3.134 7-7 7m7-7H5"/></svg>
+                </div>
+              </div>
 
               {/* Now Playing and Play Button Row */}
               <div className="flex items-center gap-3">
-              {/* Now Playing */}
+                {/* Now Playing */}
                 <div className="backdrop-blur-xl bg-white/10 rounded-full border border-white/20 px-4 py-2 overflow-hidden">
-                <div className="text-white text-sm whitespace-nowrap animate-scroll">
+                  <div className="text-white text-sm whitespace-nowrap animate-scroll">
                     {isPlaying ? "Now Playing: Written in Memory" : "Loading: Written in Memory..."}
                   </div>
-              </div>
+                </div>
 
                 {/* Play Button */}
                 <button
