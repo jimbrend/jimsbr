@@ -30,7 +30,7 @@ export default function Home() {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.play().then(() => {
-        setIsPlaying(true)
+      setIsPlaying(true)
         if (videoRef.current) {
           videoRef.current.play()
         }
@@ -77,13 +77,13 @@ export default function Home() {
   const togglePlayPause = () => {
     if (!audioRef.current) return
 
-    if (isPlaying) {
+      if (isPlaying) {
       audioRef.current.pause()
       if (videoRef.current) {
         videoRef.current.pause()
       }
       setIsPlaying(false)
-    } else {
+      } else {
       audioRef.current.play()
       if (videoRef.current) {
         videoRef.current.play()
@@ -129,15 +129,15 @@ export default function Home() {
   }
 
   const techStackItems = [
-    { label: "Frontend", value: "Next.js 14, React, Tailwind CSS, shadcn/ui" },
-    { label: "Backend", value: "Typescript, Supabase, Clerk, PostgreSQL, AWS Cloud, C++" },
-    { label: "Payments", value: "Stripe, Lightning Network, BTCPayServer" },
-    { label: "AI", value: "OpenAI GPT-4, Claude, Grok and X's API, Browserbase, and more" },
+    { label: "Frontend", value: "Next.js 14, React, HTML Living Standard, Tailwind CSS, electron, shadcn/ui", htmlLivingStandardSmaller: true },
+    { label: "Backend", value: "PHP, Drupal, SQL, Typescript, Supabase, Clerk, PostgreSQL, AWS Cloud, C++" },
+    { label: "Payments", value: "Lightning Network, Stipe, BTCPayServer" },
+    { label: "AI", value: "OpenAI, Claude, Grok and X's API, Browserbase, E2B, and more" },
     { label: "Deployment", value: "Vercel & GitHub, exploring other hosting options" },
     {
       label: "Game Development",
       value:
-        "Unreal 5+, Lua, C#, Google Extensions/Chromium, three.js, iOS + Mac, Metal, and Windows/Microsoft Store applications, Metahuman, and more",
+        "Unreal 5+, Unity CloudLua, O3DEC#, Google Extensions/Chromium, three.js, iOS + Mac, Metal, and Windows/Microsoft Store applications, Metahuman, and more",
     },
     { label: "3D/Animation", value: "Maya, ZBrush, Substance 3D Painter, Houdini, After Effects", isLarger: false },
   ]
@@ -148,19 +148,21 @@ export default function Home() {
       <audio
         ref={audioRef}
         src="written-in-memory.mp3"
+        loop
       />
 
       {/* Parallax Background Image */}
       <div 
-        className={`fixed inset-0 z-0 opacity-35 transition-opacity duration-1000 ${
-          isPlaying ? 'opacity-0' : 'opacity-35'
+        className={`fixed inset-0 z-0 opacity-50 transition-all duration-1000 ${
+          isPlaying ? 'opacity-0' : 'opacity-50'
         }`}
         style={{
           backgroundImage: 'url(/background-image.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transform: `translate(${(mousePosition.x - 50) * 0.02}px, ${(mousePosition.y - 50) * 0.02}px)`,
-          transition: 'transform 0.1s ease-out'
+          transition: 'transform 0.1s ease-out',
+          filter: isPlaying ? 'brightness(1)' : 'brightness(1.2)'
         }}
       />
 
@@ -187,57 +189,59 @@ export default function Home() {
       {/* Large Scrolling Background Text */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className={`absolute inset-0 transition-opacity duration-1000 ${
-          isPlaying ? 'opacity-20' : 'opacity-0'
+          isPlaying ? 'opacity-20' : 'opacity-20'
         }`}>
-          <div className="text-white font-mono text-lg md:text-xl lg:text-2xl leading-relaxed whitespace-nowrap">
-            {isPlaying && (
+          <div className={`text-white/35 font-mono text-lg md:text-xl lg:text-2xl leading-relaxed whitespace-nowrap ${
+            !isPlaying ? 'animate-fade-to-deep-red' : ''
+          }`}>
+            {(isPlaying || !isPlaying) && (
               <>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '0s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '0s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '1s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '1s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '2s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '2s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '3s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '3s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '4s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '4s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '5s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '5s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '6s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '6s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '7s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '7s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '8s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '8s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '9s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '9s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '10s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '10s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '11s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '11s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '12s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '12s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '13s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '13s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '14s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '14s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
-                <div className="animate-scroll-left-to-right mb-4" style={{ animationDelay: '15s' }}>
+                <div className={`mb-4 ${isPlaying ? 'animate-scroll-left-to-right' : ''}`} style={{ animationDelay: '15s' }}>
                   01110111 01110010 01101001 01110100 01110100 01100101 01101110 00100000 01101001 01101110 00100000 01101101 01100101 01101101 01101111 01110010 01111001
                 </div>
               </>
@@ -300,19 +304,17 @@ export default function Home() {
 
               {/* Now Playing and Play Button Row */}
               <div className="flex items-center gap-3">
-                {/* Now Playing */}
+              {/* Now Playing */}
                 <div className="backdrop-blur-xl bg-white/10 rounded-full border border-white/20 px-4 py-2 overflow-hidden">
-                  <div className="text-white text-sm whitespace-nowrap animate-scroll">
+                <div className="text-white text-sm whitespace-nowrap animate-scroll">
                     {isPlaying ? "Now Playing: Written in Memory" : "Loading: Written in Memory..."}
                   </div>
-                </div>
+              </div>
 
                 {/* Play Button */}
                 <button
                   onClick={togglePlayPause}
-                  className={`p-3 backdrop-blur-xl bg-white/10 rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors ${
-                    !isPlaying ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`p-3 backdrop-blur-xl bg-white/10 rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors`}
                   aria-label="Toggle play/pause"
                 >
                   {isPlaying ? (
@@ -388,30 +390,17 @@ export default function Home() {
           {/* Social Media Buttons */}
           <div className="flex flex-wrap gap-3 justify-center items-center mb-8">
             <a
-              href="https://www.linkedin.com/in/jimbrendlinger/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] rounded-full text-white font-medium hover:shadow-inner hover:shadow-black/30 active:shadow-inner active:shadow-black/50 transition-all duration-200 transform hover:scale-[0.98] active:scale-95 text-sm shadow-lg hover:shadow-[#0077B5]/50"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-              LinkedIn
-            </a>
-
-            <a
               href="https://github.com/jimbrend"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#333333] rounded-full text-white font-medium hover:shadow-inner hover:shadow-black/30 active:shadow-inner active:shadow-black/50 transition-all duration-200 transform hover:scale-[0.98] active:scale-95 text-sm shadow-lg hover:shadow-[#333333]/50"
+              style={{ transform: 'scale(1.08)' }}
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
               GitHub
             </a>
-
-            
 
             <a
               href="https://www.instagram.com/usernameisjim"
@@ -466,6 +455,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF6719] rounded-full text-white font-medium hover:shadow-inner hover:shadow-black/30 active:shadow-inner active:shadow-black/50 transition-all duration-200 transform hover:scale-[0.98] active:scale-95 text-sm shadow-lg hover:shadow-orange-500/50"
+              style={{ transform: 'scale(1.08)' }}
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -474,14 +464,36 @@ export default function Home() {
             </a>
 
             <a
+              href="https://www.linkedin.com/in/jimbrendlinger/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] rounded-full text-white font-medium hover:shadow-inner hover:shadow-black/30 active:shadow-inner active:shadow-black/50 transition-all duration-200 transform hover:scale-[0.98] active:scale-95 text-sm shadow-lg hover:shadow-[#0077B5]/50"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+              LinkedIn
+            </a>
+
+            <a
               href="https://zap.stream/p/npub15jnskzcd5tga5rq2w0af0h46tf6lzkdkxjh58hewqrdglt0a0jkq9ygv88"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF6B35] to-[#F7931E] rounded-full text-white font-medium hover:shadow-inner hover:shadow-black/30 active:shadow-inner active:shadow-black/50 transition-all duration-200 transform hover:scale-[0.98] active:scale-95 text-sm shadow-lg hover:shadow-orange-500/50"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-purple-900 rounded-full text-white font-medium hover:shadow-inner hover:shadow-black/30 active:shadow-inner active:shadow-black/50 transition-all duration-200 transform hover:scale-[0.98] active:scale-95 text-sm shadow-lg hover:shadow-purple-500/50 group"
+              style={{ transform: 'scale(1.08)' }}
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
+              <img 
+                src="/nostr.gif" 
+                alt="Nostr" 
+                className="w-5 h-5 group-hover:animate-pulse nostr-gif"
+                style={{ animationPlayState: 'paused' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.animationPlayState = 'running';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.animationPlayState = 'paused';
+                }}
+              />
               Zap.stream
             </a>
           </div>
@@ -506,7 +518,15 @@ export default function Home() {
                 {techStackItems.map((item, index) => (
                   <div key={index} className={`tech-item ${item.isLarger ? "tech-item-large" : ""}`}>
                     <span className="tech-label text-black font-medium">{item.label}</span>
-                    <span className="text-white">: {item.value}</span>
+                    <span className="text-white">: {
+                      item.htmlLivingStandardSmaller ? (
+                        <>
+                          Next.js 14, React, <span className="text-[0.9em]">HTML Living Standard</span>, Tailwind CSS, electron, shadcn/ui
+                        </>
+                      ) : (
+                        item.value
+                      )
+                    }</span>
                   </div>
                 ))}
               </div>

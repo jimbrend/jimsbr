@@ -16,12 +16,11 @@ export default function SketchfabViewer({
   autostart = true,
   transparent = true,
   ui_infos = 0,
-  ui_controls = 0, // Changed from 1 to 0 to remove controls
+  ui_controls = 0,
   ui_stop = 0,
 }: SketchfabViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
-  const clientRef = useRef<any>(null)
 
   useEffect(() => {
     // Load the Sketchfab API script
@@ -50,7 +49,6 @@ export default function SketchfabViewer({
         ui_controls,
         ui_stop,
         success: (api: any) => {
-          clientRef.current = api
           api.start()
           api.addEventListener("viewerready", () => {
             console.log("Viewer ready")
