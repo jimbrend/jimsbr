@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scroll animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scrollVertical {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes scrollDiagonal {
+  0% {
+    transform: translate(100vw, -100vh);
+  }
+  100% {
+    transform: translate(-100%, 100vh);
+  }
+}
+
+@keyframes scrollLeftToRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes typewriter {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+.animate-scroll-vertical {
+  animation: scrollVertical 8s linear infinite;
+}
+
+.animate-scroll-diagonal {
+  animation: scrollDiagonal 12s linear infinite;
+}
+
+.animate-typewriter {
+  animation: typewriter 15s linear infinite;
+}
+
+.animate-scroll-left-to-right {
+  animation: scrollLeftToRight 8s linear infinite;
+}
+
+/* Volume slider styling */
+.slider {
+  background: linear-gradient(to right, #ffffff40 0%, #ffffff40 100%);
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Simple Tech Stack Container */
+.starfield-water-container {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  background: radial-gradient(circle at center, rgba(0, 0, 50, 0.4) 0%, rgba(0, 0, 20, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.6s ease;
+}
+
+/* Simple hover effect */
+.starfield-water-container.water-ripple-active {
+  background: radial-gradient(
+      circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+      rgba(100, 200, 255, 0.1) 0%,
+      rgba(100, 200, 255, 0.05) 40%,
+      rgba(0, 0, 50, 0.4) 70%
+    ), radial-gradient(circle at center, rgba(0, 0, 50, 0.4) 0%, rgba(0, 0, 20, 0.6) 100%);
+}
+
+/* Tech stack content */
+.tech-stack {
+  position: relative;
+  z-index: 3;
+}
+
+.tech-item {
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.tech-item-large {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.starfield-water-container.water-ripple-active .tech-item {
+  animation: waterFloat 8s ease-in-out infinite;
+}
+
+@keyframes waterFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  25% {
+    transform: translateY(-2px) scale(1.01);
+    text-shadow: 0 0 15px rgba(100, 200, 255, 0.5);
+  }
+  50% {
+    transform: translateY(1px) scale(0.99);
+    text-shadow: 0 0 20px rgba(100, 200, 255, 0.7);
+  }
+  75% {
+    transform: translateY(-1px) scale(1.005);
+    text-shadow: 0 0 12px rgba(100, 200, 255, 0.4);
+  }
+}
+
+/* Water reflection on text */
+.starfield-water-container.water-ripple-active .tech-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(100, 200, 255, 0.1) 50%, transparent 70%);
+  animation: waterReflection 12s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@keyframes waterReflection {
+  0%,
+  100% {
+    transform: translateX(-100%) skewX(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(100%) skewX(10deg);
+    opacity: 0.4;
+  }
+}
