@@ -288,7 +288,7 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-white/80 mb-8 opacity-80">
               Including: AI Browser Operators, Shopping Assistants, Desktop Computers, e-commerce, gaming studio,
               bitcoin projects, <span
-                className="cursor-pointer text-yellow-200 hover:text-yellow-400 active:text-yellow-500 transition-colors"
+                className="text-yellow-100 italic underline decoration-dotted decoration-yellow-200 transition-colors"
                 onMouseEnter={() => {
                   // Do nothing on hover, only unmute on click
                 }}
